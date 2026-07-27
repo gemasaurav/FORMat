@@ -1,1 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FORMat</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+
+<h1>📋 FORMat</h1>
+
+<p>Smart Text → Form Converter</p>
+
+</div>
+
+<div class="input-section">
+
+<h2>Paste Text</h2>
+
+<textarea
+id="inputText"
+placeholder="Paste any paragraph, application, resume, biography, report or long text here..."
+></textarea>
+
+<div class="button-group">
+
+<button id="pasteBtn">
+📋 Paste
+</button>
+
+<button id="clearBtn">
+🗑 Clear
+</button>
+
+<button id="extractBtn">
+🔍 Extract Details
+</button>
+
+</div>
+
+</div>
+
+<div id="loading"></div>
+
+<div id="resultCard">
+
+<h2>Extracted Details</h2>
+
+<div class="form">
+
+<div class="field">
+<label>Name</label>
+<input type="text" id="name">
+</div>
+
+<div class="field">
+<label>Father's Name</label>
+<input type="text" id="father">
+</div>
+
+<div class="field">
+<label>Mother's Name</label>
+<input type="text" id="mother">
+</div>
+
+<div class="field">
+<label>Age</label>
+<input type="text" id="age">
+</div>
+
+<div class="field">
+<label>Gender</label>
+<input type="text" id="gender">
+</div>
+
+<div class="field">
+<label>Date of Birth</label>
+<input type="text" id="dob">
+</div>
+
+<div class="field">
+<label>Mobile Number</label>
+<input type="text" id="mobile">
+</div>
+
+<div class="field">
+<label>Alternate Number</label>
+<input type="text" id="alternate">
+</div>
+
+<div class="field">
+<label>Email</label>
+<input type="text" id="email">
+</div>
+
+<div class="field">
+<label>Address</label>
+<textarea id="address"></textarea>
+</div>
+
+<div class="field">
+<label>PIN Code</label>
+<input type="text" id="pincode">
+</div>
+
+<div class="field">
+<label>Occupation</label>
+<input type="text" id="occupation">
+</div>
+
+<div class="field">
+<label>Blood Group</label>
+<input type="text" id="blood">
+</div>
+
+<div class="field">
+<label>Nationality</label>
+<input type="text" id="nationality">
+</div>
+
+<div class="field">
+<label>Marital Status</label>
+<input type="text" id="marital">
+</div>
+
+</div>
+
+<div class="button-group">
+
+<button id="copyBtn">
+📋 Copy Details
+</button>
+
+<button id="pdfBtn">
+📄 Export PDF
+</button>
+
+<button id="saveBtn">
+💾 Save
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
