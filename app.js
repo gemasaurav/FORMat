@@ -1,8 +1,8 @@
 /* ==========================================
-   FORMat
-   Version 2.0
-   Smart Extraction Engine
-   Developed for Gema
+FORMat
+Main Controller
+Version 2.1
+Created for Gema
 ========================================== */
 
 const inputText=document.getElementById("inputText");
@@ -15,23 +15,23 @@ const pasteBtn=document.getElementById("pasteBtn");
 
 const copyBtn=document.getElementById("copyBtn");
 
+const pdfBtn=document.getElementById("pdfBtn");
+
+const saveBtn=document.getElementById("saveBtn");
+
 const loading=document.getElementById("loading");
 
-/* ==========================================
+/* =======================================
 CLEAR
-========================================== */
+======================================= */
 
 clearBtn.onclick=function(){
 
 inputText.value="";
 
-document.querySelectorAll("input").forEach(function(i){
+document.querySelectorAll("input").forEach(i=>i.value="");
 
-i.value="";
-
-});
-
-document.querySelectorAll("textarea").forEach(function(t){
+document.querySelectorAll("textarea").forEach(t=>{
 
 if(t.id!="inputText"){
 
@@ -45,9 +45,9 @@ loading.innerHTML="";
 
 };
 
-/* ==========================================
+/* =======================================
 PASTE
-========================================== */
+======================================= */
 
 pasteBtn.onclick=async function(){
 
@@ -57,7 +57,9 @@ const txt=await navigator.clipboard.readText();
 
 inputText.value=txt;
 
-}catch{
+}
+
+catch{
 
 alert("Clipboard Permission Denied");
 
@@ -65,665 +67,90 @@ alert("Clipboard Permission Denied");
 
 };
 
-/* ==========================================
-COPY
-========================================== */
-
-copyBtn.onclick=function(){
-
-let data="";
-
-document.querySelectorAll(".field").forEach(function(field){
-
-const label=field.querySelector("label").innerText;
-
-const value=field.querySelector("input,textarea").value;
-
-data+=label+" : "+value+"\n";
-
-});
-
-navigator.clipboard.writeText(data);
-
-alert("Copied Successfully");
-
-};
-
-/* ==========================================
-EXTRACT BUTTON
-========================================== */
+/* =======================================
+EXTRACT
+======================================= */
 
 extractBtn.onclick=function(){
 
 loading.innerHTML="🔍 Reading Paragraph...";
 
-const txt=inputText.value;
-
-extractEverything(txt);
+extractData(inputText.value);
 
 loading.innerHTML="";
 
 };
 
-/* ==========================================
-MASTER ENGINE
-========================================== */
+/* =======================================
+COPY
+======================================= */
 
-function extractEverything(text){
+copyBtn.onclick=function(){
 
-fillName(text);
+let text="";
 
-fillFather(text);
+document.querySelectorAll(".field").forEach(field=>{
 
-fillMother(text);
+const label=field.querySelector("label").innerText;
 
-fillDOB(text);
+const value=field.querySelector("input,textarea").value;
 
-fillAge(text);
+text+=label+" : "+value+"\n";
 
-fillGender(text);
+});
 
-fillOccupation(text);
+navigator.clipboard.writeText(text);
 
-fillEducation(text);
+alert("Copied Successfully");
 
-fillMobile(text);
+};
 
-fillAlternate(text);
+/* =======================================
+PDF
+======================================= */
 
-fillEmail(text);
+pdfBtn.onclick=function(){
 
-fillAddress(text);
+generatePDF();
 
-fillCity(text);
+};
 
-fillState(text);
+/* =======================================
+SAVE
+======================================= */
 
-fillPincode(text);
+saveBtn.onclick=function(){
 
-fillBlood(text);
+localStorage.setItem(
 
-fillNationality(text);
+"FORMAT_LAST_FORM",
 
-fillMarital(text);
+JSON.stringify(getAllFields())
 
-improveAddress();
+);
 
-}
-/* ==========================================
-NAME
-========================================== */
+alert("Saved Successfully");
 
-function fillName(text){
+};
 
-let patterns=[
+/* =======================================
+GET ALL FIELDS
+======================================= */
 
-/my name is\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,4})/i,
+function getAllFields(){
 
-/name\s*[:\-]\s*([A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,4})/i,
+let obj={};
 
-/i am\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,4})/i
+document.querySelectorAll(".field").forEach(field=>{
 
-];
+const label=field.querySelector("label").innerText;
 
-for(let p of patterns){
+const value=field.querySelector("input,textarea").value;
 
-let m=text.match(p);
+obj[label]=value;
 
-if(m){
+});
 
-document.getElementById("name").value=m[1].trim();
-
-return;
-
-}
-
-}
-
-}
-
-/* ==========================================
-FATHER
-========================================== */
-
-function fillFather(text){
-
-let patterns=[
-
-/s\/o\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,4})/i,
-
-/son of\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,4})/i,
-
-/father'?s name\s*[:\-]?\s*([A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,4})/i
-
-];
-
-for(let p of patterns){
-
-let m=text.match(p);
-
-if(m){
-
-document.getElementById("father").value=m[1].trim();
-
-return;
-
-}
-
-}
-
-}
-
-/* ==========================================
-MOTHER
-========================================== */
-
-function fillMother(text){
-
-let patterns=[
-
-/mother'?s name\s*[:\-]?\s*([A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,4})/i,
-
-/d\/o\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,4})/i
-
-];
-
-for(let p of patterns){
-
-let m=text.match(p);
-
-if(m){
-
-document.getElementById("mother").value=m[1].trim();
-
-return;
-
-}
-
-}
-
-}
-
-/* ==========================================
-AGE
-========================================== */
-
-function fillAge(text){
-
-let patterns=[
-
-/(\d{1,3})\s+years?\s+old/i,
-
-/age\s*[:\-]?\s*(\d{1,3})/i,
-
-/(\d{1,3})\s+yrs?/i
-
-];
-
-for(let p of patterns){
-
-let m=text.match(p);
-
-if(m){
-
-document.getElementById("age").value=m[1];
-
-return;
-
-}
-
-}
-
-}
-
-/* ==========================================
-GENDER
-========================================== */
-
-function fillGender(text){
-
-if(/\bfemale\b/i.test(text)){
-
-document.getElementById("gender").value="Female";
-
-return;
-
-}
-
-if(/\bmale\b/i.test(text)){
-
-document.getElementById("gender").value="Male";
-
-return;
-
-}
-
-if(/\bgirl\b/i.test(text)){
-
-document.getElementById("gender").value="Female";
-
-return;
-
-}
-
-if(/\bboy\b/i.test(text)){
-
-document.getElementById("gender").value="Male";
-
-return;
-
-}
-
-}
-/* ==========================================
-DATE OF BIRTH
-========================================== */
-
-function fillDOB(text){
-
-let patterns=[
-
-/date of birth\s*(is|:)?\s*([A-Za-z]{3,9}\.? ?\d{1,2},? ?\d{4})/i,
-
-/date of birth\s*(is|:)?\s*(\d{1,2}[\/\-.]\d{1,2}[\/\-.]\d{2,4})/i,
-
-/born on\s*([A-Za-z]{3,9}\.? ?\d{1,2},? ?\d{4})/i,
-
-/born on\s*(\d{1,2}[\/\-.]\d{1,2}[\/\-.]\d{2,4})/i
-
-];
-
-for(let p of patterns){
-
-let m=text.match(p);
-
-if(m){
-
-document.getElementById("dob").value=m[m.length-1].trim();
-
-return;
-
-}
-
-}
-
-}
-
-/* ==========================================
-OCCUPATION
-========================================== */
-
-function fillOccupation(text){
-
-let patterns=[
-
-/i am a[n]?\s+([A-Za-z ]+)/i,
-
-/occupation\s*[:\-]?\s*([A-Za-z ]+)/i,
-
-/profession\s*[:\-]?\s*([A-Za-z ]+)/i,
-
-/working as\s+([A-Za-z ]+)/i
-
-];
-
-for(let p of patterns){
-
-let m=text.match(p);
-
-if(m){
-
-let job=m[1].trim();
-
-job=job.split(".")[0];
-
-job=job.split(",")[0];
-
-document.getElementById("occupation").value=job;
-
-return;
-
-}
-
-}
-
-}
-
-/* ==========================================
-EDUCATION
-========================================== */
-
-function fillEducation(text){
-
-let patterns=[
-
-/studied in\s+([A-Za-z0-9 ]+)/i,
-
-/study in\s+([A-Za-z0-9 ]+)/i,
-
-/class\s+([A-Za-z0-9]+)/i,
-
-/completed\s+([A-Za-z0-9 ]+)/i
-
-];
-
-for(let p of patterns){
-
-let m=text.match(p);
-
-if(m){
-
-document.getElementById("occupation").value +=
-(document.getElementById("occupation").value ? " | " : "") +
-"Education: "+m[1].trim();
-
-return;
-
-}
-
-}
-
-}
-
-/* ==========================================
-ADDRESS
-========================================== */
-
-function fillAddress(text){
-
-let patterns=[
-
-/r\/o\s+([^.,\n]+)/i,
-
-/resident of\s+([^.,\n]+)/i,
-
-/address\s*[:\-]?\s*([^.\n]+)/i,
-
-/living at\s+([^.\n]+)/i
-
-];
-
-for(let p of patterns){
-
-let m=text.match(p);
-
-if(m){
-
-document.getElementById("address").value=m[1].trim();
-
-return;
-
-}
-
-}
-
-}
-
-/* ==========================================
-CITY
-========================================== */
-
-function fillCity(text){
-
-let patterns=[
-
-/i live in\s+([A-Za-z ]+)/i,
-
-/city\s*[:\-]?\s*([A-Za-z ]+)/i
-
-];
-
-for(let p of patterns){
-
-let m=text.match(p);
-
-if(m){
-
-let city=m[1].trim();
-
-let old=document.getElementById("address").value;
-
-document.getElementById("address").value=
-old+"\nCity : "+city;
-
-return;
-
-}
-
-}
-
-}
-
-/* ==========================================
-STATE
-========================================== */
-
-function fillState(text){
-
-let states=[
-
-"Delhi",
-
-"Uttar Pradesh",
-
-"Haryana",
-
-"Punjab",
-
-"Rajasthan",
-
-"Bihar",
-
-"Jharkhand",
-
-"Madhya Pradesh",
-
-"Gujarat",
-
-"Maharashtra",
-
-"West Bengal",
-
-"Odisha",
-
-"Tamil Nadu",
-
-"Karnataka",
-
-"Kerala",
-
-"Assam"
-
-];
-
-for(let s of states){
-
-if(text.toLowerCase().includes(s.toLowerCase())){
-
-let old=document.getElementById("address").value;
-
-document.getElementById("address").value=
-old+"\nState : "+s;
-
-return;
-
-}
-
-}
-
-}
-
-/* ==========================================
-PINCODE
-========================================== */
-
-function fillPincode(text){
-
-let m=text.match(/\b\d{6}\b/);
-
-if(m){
-
-document.getElementById("pincode").value=m[0];
-
-}
-
-}
-/* ==========================================
-MOBILE NUMBER
-========================================== */
-
-function fillMobile(text){
-
-let patterns=[
-
-/mobile\s*(number)?\s*(is|:)?\s*([6-9]\d{9})/i,
-
-/contact\s*(number)?\s*(is|:)?\s*([6-9]\d{9})/i,
-
-/phone\s*(number)?\s*(is|:)?\s*([6-9]\d{9})/i,
-
-/\b([6-9]\d{9})\b/
-
-];
-
-for(let p of patterns){
-
-let m=text.match(p);
-
-if(m){
-
-document.getElementById("mobile").value=m[m.length-1];
-
-return;
-
-}
-
-}
-
-}
-
-/* ==========================================
-ALTERNATE MOBILE
-========================================== */
-
-function fillAlternate(text){
-
-let numbers=text.match(/\b[6-9]\d{9}\b/g);
-
-if(numbers && numbers.length>=2){
-
-document.getElementById("alternate").value=numbers[1];
-
-}
-
-}
-
-/* ==========================================
-EMAIL
-========================================== */
-
-function fillEmail(text){
-
-let m=text.match(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/);
-
-if(m){
-
-document.getElementById("email").value=m[0];
-
-}
-
-}
-
-/* ==========================================
-BLOOD GROUP
-========================================== */
-
-function fillBlood(text){
-
-let m=text.match(/\b(A|B|AB|O)[+-]\b/i);
-
-if(m){
-
-document.getElementById("blood").value=m[0].toUpperCase();
-
-}
-
-}
-
-/* ==========================================
-NATIONALITY
-========================================== */
-
-function fillNationality(text){
-
-let patterns=[
-
-/nationality\s*(is|:)?\s*([A-Za-z ]+)/i,
-
-/i am an?\s+indian/i,
-
-/i am an?\s+american/i,
-
-/i am an?\s+canadian/i
-
-];
-
-for(let p of patterns){
-
-let m=text.match(p);
-
-if(m){
-
-if(m[2])
-
-document.getElementById("nationality").value=m[2].trim();
-
-else{
-
-document.getElementById("nationality").value=m[0]
-.replace(/i am/i,"")
-.trim();
-
-}
-
-return;
-
-}
-
-}
-
-}
-
-/* ==========================================
-MARITAL STATUS
-========================================== */
-
-function fillMarital(text){
-
-if(/married/i.test(text))
-
-document.getElementById("marital").value="Married";
-
-else if(/unmarried/i.test(text))
-
-document.getElementById("marital").value="Unmarried";
-
-else if(/single/i.test(text))
-
-document.getElementById("marital").value="Single";
-
-}
-
-/* ==========================================
-IMPROVED ADDRESS
-========================================== */
-
-function improveAddress(){
-
-let addr=document.getElementById("address").value;
-
-addr=addr.replace(/\s+/g," ").trim();
-
-document.getElementById("address").value=addr;
+return obj;
 
 }
