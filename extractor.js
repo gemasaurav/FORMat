@@ -70,6 +70,19 @@ extractCity(text);
 extractState(text);
 
 extractPin(text);
+extractAadhaar(text);
+
+extractPAN(text);
+
+extractPassport(text);
+
+extractDL(text);
+
+extractBank(text);
+
+extractIFSC(text);
+
+extractUPI(text);
 }
 
 /* ==========================================
