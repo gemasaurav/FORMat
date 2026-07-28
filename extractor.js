@@ -65,7 +65,11 @@ extractEducation(text);
 
 setField("address",
 findPattern(text,PATTERNS.address));
+extractCity(text);
 
+extractState(text);
+
+extractPin(text);
 }
 
 /* ==========================================
