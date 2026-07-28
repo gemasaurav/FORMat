@@ -129,6 +129,8 @@ fillEducation(text);
 
 fillMobile(text);
 
+fillAlternate(text);
+
 fillEmail(text);
 
 fillAddress(text);
@@ -142,6 +144,10 @@ fillPincode(text);
 fillBlood(text);
 
 fillNationality(text);
+
+fillMarital(text);
+
+improveAddress();
 
 }
 /* ==========================================
