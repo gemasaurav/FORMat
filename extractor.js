@@ -304,3 +304,114 @@ return;
 }
 
 }
+/* ==========================================
+AADHAAR
+========================================== */
+
+function extractAadhaar(text){
+
+let m=text.match(/\b\d{4}\s?\d{4}\s?\d{4}\b/);
+
+if(m){
+
+console.log("Aadhaar Found : "+m[0]);
+
+}
+
+}
+
+/* ==========================================
+PAN
+========================================== */
+
+function extractPAN(text){
+
+let m=text.match(/\b[A-Z]{5}[0-9]{4}[A-Z]{1}\b/);
+
+if(m){
+
+console.log("PAN Found : "+m[0]);
+
+}
+
+}
+
+/* ==========================================
+PASSPORT
+========================================== */
+
+function extractPassport(text){
+
+let m=text.match(/\b[A-Z][0-9]{7}\b/);
+
+if(m){
+
+console.log("Passport Found : "+m[0]);
+
+}
+
+}
+
+/* ==========================================
+DRIVING LICENCE
+========================================== */
+
+function extractDL(text){
+
+let m=text.match(/\b[A-Z]{2}[0-9]{2}[0-9]{11}\b/);
+
+if(m){
+
+console.log("Driving Licence : "+m[0]);
+
+}
+
+}
+
+/* ==========================================
+BANK ACCOUNT
+========================================== */
+
+function extractBank(text){
+
+let m=text.match(/\b\d{9,18}\b/);
+
+if(m){
+
+console.log("Bank Account : "+m[0]);
+
+}
+
+}
+
+/* ==========================================
+IFSC
+========================================== */
+
+function extractIFSC(text){
+
+let m=text.match(/\b[A-Z]{4}0[A-Z0-9]{6}\b/i);
+
+if(m){
+
+console.log("IFSC : "+m[0].toUpperCase());
+
+}
+
+}
+
+/* ==========================================
+UPI
+========================================== */
+
+function extractUPI(text){
+
+let m=text.match(/[A-Za-z0-9.\-_]{2,}@[A-Za-z]{2,}/);
+
+if(m){
+
+console.log("UPI : "+m[0]);
+
+}
+
+}
