@@ -520,3 +520,103 @@ console.log("UPI : "+m[0]);
 }
 
 }
+/* ==========================================
+MODULE 2
+ADDRESS PARSER
+========================================== */
+
+function extractAddress(text){
+
+/* ---------- AREA (R/o) ---------- */
+
+let m=text.match(/R\/o\s+([^.,\n]+)/i);
+
+if(m){
+
+document.getElementById("area").value=
+
+cleanValue(m[1]);
+
+}
+
+/* ---------- CITY ---------- */
+
+m=text.match(/I live in\s+([A-Za-z ]+?)(?:[-, ]\d{6}|\.)/i);
+
+if(m){
+
+document.getElementById("city").value=
+
+cleanValue(m[1]);
+
+}
+
+/* ---------- PIN ---------- */
+
+m=text.match(/\b(\d{6})\b/);
+
+if(m){
+
+document.getElementById("pincode").value=m[1];
+
+}
+
+/* ---------- STATE ---------- */
+
+const states=[
+
+"Delhi",
+
+"Uttar Pradesh",
+
+"Haryana",
+
+"Punjab",
+
+"Rajasthan",
+
+"Bihar",
+
+"Jharkhand",
+
+"Madhya Pradesh",
+
+"Maharashtra",
+
+"Gujarat",
+
+"West Bengal",
+
+"Odisha",
+
+"Tamil Nadu",
+
+"Karnataka",
+
+"Kerala",
+
+"Assam",
+
+"Telangana",
+
+"Andhra Pradesh"
+
+];
+
+for(let s of states){
+
+if(text.toLowerCase().includes(s.toLowerCase())){
+
+document.getElementById("state").value=s;
+
+break;
+
+}
+
+}
+
+/* ---------- COUNTRY ---------- */
+
+document.getElementById("country").value="India";
+
+}
