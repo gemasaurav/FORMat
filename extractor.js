@@ -139,11 +139,7 @@ cleanValue(m[1]);
 
 setField("address",
 findPattern(text,PATTERNS.address));
-extractCity(text);
-
-extractState(text);
-
-extractPin(text);
+extractAddress(text);
 m = text.match(/\bI am an?\s+(Indian|American|British|Canadian|Australian|Japanese|Chinese|Nepali|Bangladeshi|Pakistani|Sri Lankan)\b/i);
 
 if (m) {
