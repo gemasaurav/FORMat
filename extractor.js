@@ -32,20 +32,88 @@ EXTRACT DATA
 ========================================== */
 
 function extractData(text){
+function cleanValue(value){
 
+if(!value) return "";
+
+return value
+.replace(/\s+/g," ")
+.replace(/[.,;]+$/,"")
+.trim();
+
+}
+
+function stopAtBoundary(value){
+
+const boundaries=[
+"S/o",
+"D/o",
+"W/o",
+"R/o",
+"Son of",
+"Daughter of",
+"Wife of",
+"My age",
+"I am",
+"Age",
+"Date of Birth",
+"DOB",
+"Mobile",
+"Phone",
+"Email"
+];
+
+let result=value;
+
+boundaries.forEach(b=>{
+
+const i=result.toLowerCase().indexOf(b.toLowerCase());
+
+if(i!=-1){
+
+result=result.substring(0,i);
+
+}
+
+});
+
+return cleanValue(result);
+
+}
 clearForm();
 
-setField("name",
-findPattern(text,PATTERNS.name));
+let m=text.match(/my name is\s+(.+)/i);
 
-setField("father",
-findPattern(text,PATTERNS.father));
+if(m){
+
+document.getElementById("name").value=
+
+stopAtBoundary(m[1]);
+
+}
+
+m=text.match(/S\/o\s+(.+)/i);
+
+if(m){
+
+document.getElementById("father").value=
+
+stopAtBoundary(m[1]);
+
+}
 
 setField("mother",
 findPattern(text,PATTERNS.mother));
 
-setField("dob",
-findPattern(text,PATTERNS.dob));
+m=text.match(/date of birth\s*(?:is|:)?\s*([^.]+)/i);
+
+if(m){
+
+document.getElementById("dob").value=
+
+cleanValue(m[1]);
+
+}
 
 setField("age",
 findPattern(text,PATTERNS.age));
@@ -63,6 +131,16 @@ findPattern(text,PATTERNS.occupation));
 
 extractEducation(text);
 
+m=text.match(/Blood\s*Group\s*([A-Za-z0-9+-]+)/i);
+
+if(m){
+
+document.getElementById("blood").value=
+
+cleanValue(m[1]);
+
+}
+
 setField("address",
 findPattern(text,PATTERNS.address));
 extractCity(text);
@@ -70,6 +148,28 @@ extractCity(text);
 extractState(text);
 
 extractPin(text);
+m=text.match(/I am an?\s+([A-Za-z]+)\./i);
+
+if(m){
+
+document.getElementById("nationality").value=
+
+cleanValue(m[1]);
+
+}
+
+if(/unmarried/i.test(text)){
+
+document.getElementById("marital").value="Unmarried";
+
+}
+
+else if(/married/i.test(text)){
+
+document.getElementById("marital").value="Married";
+
+}
+
 extractAadhaar(text);
 
 extractPAN(text);
