@@ -552,7 +552,13 @@ cleanValue(m[1]);
 
 /* ---------- PIN ---------- */
 
+m=text.match(/(?:-|,|\s)(\d{6})\b/);
+
+if(!m){
+
 m=text.match(/\b(\d{6})\b/);
+
+}
 
 if(m){
 
