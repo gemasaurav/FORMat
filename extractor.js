@@ -157,7 +157,10 @@ else if(/married/i.test(text)){
 document.getElementById("marital").value="Married";
 
 }
+extractNationality(text);
 
+extractMarital(text);
+    
 extractAadhaar(text);
 
 extractPAN(text);
