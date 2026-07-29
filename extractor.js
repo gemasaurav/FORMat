@@ -105,14 +105,10 @@ stopAtBoundary(m[1]);
 setField("mother",
 findPattern(text,PATTERNS.mother));
 
-m=text.match(/date of birth\s*(?:is|:)?\s*([^.]+)/i);
+m = text.match(/date of birth\s*(?:is|:)?\s*(.+?)(?=\.\s+[A-Z]|$)/i);
 
-if(m){
-
-document.getElementById("dob").value=
-
-cleanValue(m[1]);
-
+if (m) {
+    document.getElementById("dob").value = cleanValue(m[1]);
 }
 
 setField("age",
@@ -148,14 +144,10 @@ extractCity(text);
 extractState(text);
 
 extractPin(text);
-m=text.match(/I am an?\s+([A-Za-z]+)\./i);
+m = text.match(/\bI am an?\s+(Indian|American|British|Canadian|Australian|Japanese|Chinese|Nepali|Bangladeshi|Pakistani|Sri Lankan)\b/i);
 
-if(m){
-
-document.getElementById("nationality").value=
-
-cleanValue(m[1]);
-
+if (m) {
+    document.getElementById("nationality").value = cleanValue(m[1]);
 }
 
 if(/unmarried/i.test(text)){
