@@ -1,627 +1,265 @@
-/* ==========================================
-FORMat
-extractor.js
-Version 2.1
-Smart Extraction Engine
-========================================== */
+/*=========================================================
+FORMat v4.0
+Core Extraction Engine
+Created for Gema
+=========================================================*/
 
-/* ==========================================
-FIND PATTERN
-========================================== */
+"use strict";
 
-function findPattern(text, patternList){
+/*=========================================================
+MAIN FUNCTION
+=========================================================*/
 
-for(let pattern of patternList){
+function extractData(rawText){
 
-let match=text.match(pattern);
+    if(!rawText) return;
 
-if(match){
+    const text = normalizeText(rawText);
 
-return match[match.length-1].trim();
+    clearForm();
+
+    const person = parsePerson(text);
+
+    const address = parseAddress(text);
+
+    const contact = parseContact(text);
+
+    const identity = parseIdentity(text);
+
+    const education = parseEducation(text);
+
+    const employment = parseEmployment(text);
+
+    fillForm({
+
+        ...person,
+
+        ...address,
+
+        ...contact,
+
+        ...identity,
+
+        ...education,
+
+        ...employment
+
+    });
 
 }
 
-}
+/*=========================================================
+TEXT NORMALIZATION
+=========================================================*/
 
-return "";
+function normalizeText(text){
 
-}
+    return text
 
-/* ==========================================
-EXTRACT DATA
-========================================== */
+        .replace(/\r/g," ")
 
-function extractData(text){
-function cleanValue(value){
+        .replace(/\n/g," ")
 
-if(!value) return "";
+        .replace(/\t/g," ")
 
-return value
-.replace(/\s+/g," ")
-.replace(/[.,;]+$/,"")
-.trim();
+        .replace(/\s+/g," ")
+
+        .trim();
 
 }
 
-function stopAtBoundary(value){
+/*=========================================================
+SAFE VALUE
+=========================================================*/
 
-const boundaries=[
+function clean(value){
+
+    if(!value) return "";
+
+    return value
+
+        .replace(/\s+/g," ")
+
+        .replace(/^[,:.\- ]+/,"")
+
+        .replace(/[,:.\- ]+$/,"")
+
+        .trim();
+
+}
+
+/*=========================================================
+FIRST MATCH
+=========================================================*/
+
+function firstMatch(text,patterns){
+
+    for(const p of patterns){
+
+        const m=text.match(p);
+
+        if(m){
+
+            return clean(m[1]);
+
+        }
+
+    }
+
+    return "";
+
+}
+
+/*=========================================================
+STOP WORDS
+=========================================================*/
+
+const STOP_WORDS=[
+
 "S/o",
+
 "D/o",
+
 "W/o",
+
+"C/o",
+
 "R/o",
+
 "Son of",
+
 "Daughter of",
+
 "Wife of",
-"My age",
-"I am",
+
+"Husband of",
+
+"Near",
+
+"Behind",
+
+"Opp",
+
 "Age",
-"Date of Birth",
+
 "DOB",
+
+"Date of Birth",
+
 "Mobile",
+
 "Phone",
+
 "Email"
+
 ];
 
-let result=value;
+/*=========================================================
+CUT AT STOP WORD
+=========================================================*/
 
-boundaries.forEach(b=>{
+function cutStopWords(value){
 
-const i=result.toLowerCase().indexOf(b.toLowerCase());
+    let result=value;
 
-if(i!=-1){
+    STOP_WORDS.forEach(word=>{
 
-result=result.substring(0,i);
+        const pos=result.toLowerCase()
 
-}
+        .indexOf(word.toLowerCase());
 
-});
+        if(pos!=-1){
 
-return cleanValue(result);
+            result=result.substring(0,pos);
 
-}
-clearForm();
+        }
 
-let m=text.match(/my name is\s+(.+)/i);
+    });
 
-if(m){
-
-document.getElementById("name").value=
-
-stopAtBoundary(m[1]);
+    return clean(result);
 
 }
 
-m=text.match(/S\/o\s+(.+)/i);
+/*=========================================================
+EMPTY PARSERS
+Will be completed in next Parts
+=========================================================*/
 
-if(m){
+function parsePerson(text){
 
-document.getElementById("father").value=
-
-stopAtBoundary(m[1]);
-
-}
-
-setField("mother",
-findPattern(text,PATTERNS.mother));
-
-m = text.match(/date of birth\s*(?:is|:)?\s*(.+?)(?=\.\s+[A-Z]|$)/i);
-
-if (m) {
-    document.getElementById("dob").value = cleanValue(m[1]);
-}
-
-setField("age",
-findPattern(text,PATTERNS.age));
-
-extractGender(text);
-
-setField("mobile",
-findPattern(text,PATTERNS.mobile));
-
-setField("email",
-findPattern(text,PATTERNS.email));
-
-setField("occupation",
-findPattern(text,PATTERNS.occupation));
-
-extractEducation(text);
-
-m=text.match(/Blood\s*Group\s*([A-Za-z0-9+-]+)/i);
-
-if(m){
-
-document.getElementById("blood").value=
-
-cleanValue(m[1]);
+    return {};
 
 }
 
-setField("address",
-findPattern(text,PATTERNS.address));
-extractAddress(text);
-m = text.match(/\bI am an?\s+(Indian|American|British|Canadian|Australian|Japanese|Chinese|Nepali|Bangladeshi|Pakistani|Sri Lankan)\b/i);
+function parseAddress(text){
 
-if (m) {
-    document.getElementById("nationality").value = cleanValue(m[1]);
-}
-
-if(/unmarried/i.test(text)){
-
-document.getElementById("marital").value="Unmarried";
+    return {};
 
 }
 
-else if(/married/i.test(text)){
+function parseContact(text){
 
-document.getElementById("marital").value="Married";
-
-}
-extractNationality(text);
-
-extractMarital(text);
-    
-extractAadhaar(text);
-
-extractPAN(text);
-
-extractPassport(text);
-
-extractDL(text);
-
-extractBank(text);
-
-extractIFSC(text);
-
-extractUPI(text);
-}
-
-/* ==========================================
-SET FIELD
-========================================== */
-
-function setField(id,value){
-
-if(value!=""){
-
-document.getElementById(id).value=value;
+    return {};
 
 }
 
+function parseIdentity(text){
+
+    return {};
+
 }
 
-/* ==========================================
+function parseEducation(text){
+
+    return {};
+
+}
+
+function parseEmployment(text){
+
+    return {};
+
+}
+
+/*=========================================================
+FILL HTML FORM
+=========================================================*/
+
+function fillForm(data){
+
+    Object.keys(data).forEach(key=>{
+
+        const field=document.getElementById(key);
+
+        if(field){
+
+            field.value=data[key];
+
+        }
+
+    });
+
+}
+
+/*=========================================================
 CLEAR FORM
-========================================== */
+=========================================================*/
 
 function clearForm(){
 
-document.querySelectorAll("input").forEach(function(i){
+    document
 
-i.value="";
+    .querySelectorAll("input,textarea")
 
-});
+    .forEach(el=>{
 
-document.querySelectorAll("textarea").forEach(function(t){
+        if(el.id!="inputText"){
 
-if(t.id!="inputText"){
+            el.value="";
 
-t.value="";
+        }
 
-}
-
-});
-
-}
-/* ==========================================
-GENDER
-========================================== */
-
-function extractGender(text){
-
-text=text.toLowerCase();
-
-if(text.includes("female")||text.includes("girl")){
-
-document.getElementById("gender").value="Female";
-
-return;
+    });
 
 }
 
-if(text.includes("male")||text.includes("boy")){
-
-document.getElementById("gender").value="Male";
-
-return;
-
-}
-
-}
-
-/* ==========================================
-EDUCATION
-========================================== */
-
-function extractEducation(text){
-
-let edu="";
-
-if(/class\s*xii/i.test(text)){
-
-edu="Class XII";
-
-}
-
-else if(/class\s*xi/i.test(text)){
-
-edu="Class XI";
-
-}
-
-else if(/class\s*x/i.test(text)){
-
-edu="Class X";
-
-}
-
-else if(/graduation/i.test(text)){
-
-edu="Graduation";
-
-}
-
-else if(/b\.?tech/i.test(text)){
-
-edu="B.Tech";
-
-}
-
-else if(/m\.?tech/i.test(text)){
-
-edu="M.Tech";
-
-}
-
-else if(/student/i.test(text)){
-
-edu="Student";
-
-}
-
-if(edu!=""){
-
-let occ=document.getElementById("occupation").value;
-
-if(occ==""){
-
-document.getElementById("occupation").value=edu;
-
-}
-
-else{
-
-document.getElementById("occupation").value=occ+" | "+edu;
-
-}
-
-}
-
-}
-
-/* ==========================================
-CITY
-========================================== */
-
-function extractCity(text){
-
-let m=text.match(/i\s+live\s+in\s+([A-Za-z ]+)/i);
-
-if(m){
-
-let old=document.getElementById("address").value;
-
-document.getElementById("address").value=
-
-old+"\nCity : "+m[1].trim();
-
-}
-
-}
-
-/* ==========================================
-PIN CODE
-========================================== */
-
-function extractPin(text){
-
-let m=text.match(/\b\d{6}\b/);
-
-if(m){
-
-document.getElementById("pincode").value=m[0];
-
-}
-
-}
-
-/* ==========================================
-STATE
-========================================== */
-
-function extractState(text){
-
-const states=[
-
-"Delhi",
-
-"Uttar Pradesh",
-
-"Haryana",
-
-"Punjab",
-
-"Rajasthan",
-
-"Bihar",
-
-"Jharkhand",
-
-"Madhya Pradesh",
-
-"Maharashtra",
-
-"Gujarat",
-
-"West Bengal",
-
-"Odisha",
-
-"Tamil Nadu",
-
-"Karnataka",
-
-"Kerala",
-
-"Assam",
-
-"Telangana",
-
-"Andhra Pradesh"
-
-];
-
-for(let s of states){
-
-if(text.toLowerCase().includes(s.toLowerCase())){
-
-let old=document.getElementById("address").value;
-
-document.getElementById("address").value=
-
-old+"\nState : "+s;
-
-return;
-
-}
-
-}
-
-}
-/* ==========================================
-AADHAAR
-========================================== */
-
-function extractAadhaar(text){
-
-let m=text.match(/\b\d{4}\s?\d{4}\s?\d{4}\b/);
-
-if(m){
-
-console.log("Aadhaar Found : "+m[0]);
-
-}
-
-}
-
-/* ==========================================
-PAN
-========================================== */
-
-function extractPAN(text){
-
-let m=text.match(/\b[A-Z]{5}[0-9]{4}[A-Z]{1}\b/);
-
-if(m){
-
-console.log("PAN Found : "+m[0]);
-
-}
-
-}
-
-/* ==========================================
-PASSPORT
-========================================== */
-
-function extractPassport(text){
-
-let m=text.match(/\b[A-Z][0-9]{7}\b/);
-
-if(m){
-
-console.log("Passport Found : "+m[0]);
-
-}
-
-}
-
-/* ==========================================
-DRIVING LICENCE
-========================================== */
-
-function extractDL(text){
-
-let m=text.match(/\b[A-Z]{2}[0-9]{2}[0-9]{11}\b/);
-
-if(m){
-
-console.log("Driving Licence : "+m[0]);
-
-}
-
-}
-
-/* ==========================================
-BANK ACCOUNT
-========================================== */
-
-function extractBank(text){
-
-let m=text.match(/\b\d{9,18}\b/);
-
-if(m){
-
-console.log("Bank Account : "+m[0]);
-
-}
-
-}
-
-/* ==========================================
-IFSC
-========================================== */
-
-function extractIFSC(text){
-
-let m=text.match(/\b[A-Z]{4}0[A-Z0-9]{6}\b/i);
-
-if(m){
-
-console.log("IFSC : "+m[0].toUpperCase());
-
-}
-
-}
-
-/* ==========================================
-UPI
-========================================== */
-
-function extractUPI(text){
-
-let m=text.match(/[A-Za-z0-9.\-_]{2,}@[A-Za-z]{2,}/);
-
-if(m){
-
-console.log("UPI : "+m[0]);
-
-}
-
-}
-/* ==========================================
-MODULE 2
-ADDRESS PARSER
-========================================== */
-
-function extractAddress(text){
-
-/* ---------- AREA (R/o) ---------- */
-
-let m=text.match(/R\/o\s+([^.,\n]+)/i);
-
-if(m){
-
-document.getElementById("area").value=
-
-cleanValue(m[1]);
-
-}
-
-/* ---------- CITY ---------- */
-
-m=text.match(/I live in\s+([A-Za-z ]+?)(?:[-, ]\d{6}|\.)/i);
-
-if(m){
-
-document.getElementById("city").value=
-
-cleanValue(m[1]);
-
-}
-
-/* ---------- PIN ---------- */
-
-m=text.match(/(?:-|,|\s)(\d{6})\b/);
-
-if(!m){
-
-m=text.match(/\b(\d{6})\b/);
-
-}
-
-if(m){
-
-document.getElementById("pincode").value=m[1];
-
-}
-
-/* ---------- STATE ---------- */
-
-const states=[
-
-"Delhi",
-
-"Uttar Pradesh",
-
-"Haryana",
-
-"Punjab",
-
-"Rajasthan",
-
-"Bihar",
-
-"Jharkhand",
-
-"Madhya Pradesh",
-
-"Maharashtra",
-
-"Gujarat",
-
-"West Bengal",
-
-"Odisha",
-
-"Tamil Nadu",
-
-"Karnataka",
-
-"Kerala",
-
-"Assam",
-
-"Telangana",
-
-"Andhra Pradesh"
-
-];
-
-for(let s of states){
-
-if(text.toLowerCase().includes(s.toLowerCase())){
-
-document.getElementById("state").value=s;
-
-break;
-
-}
-
-}
-
-/* ---------- COUNTRY ---------- */
-
-document.getElementById("country").value="India";
-
-}
