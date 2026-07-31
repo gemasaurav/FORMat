@@ -484,17 +484,17 @@ FILL HTML FORM
 
 function fillForm(data){
 
-    Object.keys(data).forEach(key=>{
+for(const key in data){
 
-        const field=document.getElementById(key);
+const element=document.getElementById(key);
 
-        if(field){
+if(element){
 
-            field.value=data[key];
+element.value=data[key];
 
-        }
+}
 
-    });
+}
 
 }
 
