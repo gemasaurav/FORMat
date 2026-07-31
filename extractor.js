@@ -189,9 +189,139 @@ Will be completed in next Parts
 PERSON PARSER
 =========================================================*/
 
+/*=========================================================
+PERSON PARSER
+=========================================================*/
+
 function parsePerson(text){
 
     const person={};
+
+    /*=========================
+    NAME
+    =========================*/
+
+    person.name=firstMatch(text,[
+
+/my\s+name\s+is\s+(.+)/i,
+
+/name\s*[:\-]\s*(.+)/i
+
+    ]);
+
+    person.name=cutStopWords(person.name);
+
+    /*=========================
+    FATHER
+    =========================*/
+
+    person.father=firstMatch(text,[
+
+/S\/o\s+(.+)/i,
+
+/Son\s+of\s+(.+)/i
+
+    ]);
+
+    person.father=cutStopWords(person.father);
+
+    /*=========================
+    MOTHER
+    =========================*/
+
+    person.mother=firstMatch(text,[
+
+/D\/o\s+(.+)/i,
+
+/Mother\s*[:\-]\s*(.+)/i
+
+    ]);
+
+    person.mother=cutStopWords(person.mother);
+
+    /*=========================
+    SPOUSE
+    =========================*/
+
+    person.spouse=firstMatch(text,[
+
+/W\/o\s+(.+)/i,
+
+/Husband\s+of\s+(.+)/i,
+
+/Wife\s+of\s+(.+)/i
+
+    ]);
+
+    person.spouse=cutStopWords(person.spouse);
+
+    /*=========================
+    AGE
+    =========================*/
+
+    let m=text.match(/\b(\d{1,3})\s+years?\s+old\b/i);
+
+    person.age=m?m[1]:"";
+
+    /*=========================
+    DATE OF BIRTH
+    =========================*/
+
+    m=text.match(/date\s+of\s+birth\s*(?:is|:)?\s*(.+?)(?=\.\s+[A-Z]|$)/i);
+
+    person.dob=m?clean(m[1]):"";
+
+    /*=========================
+    GENDER
+    =========================*/
+
+    person.gender="";
+
+    if(/\bfemale\b|\bgirl\b/i.test(text))
+        person.gender="Female";
+
+    if(/\bmale\b|\bboy\b/i.test(text))
+        person.gender="Male";
+
+    /*=========================
+    BLOOD GROUP
+    =========================*/
+
+    m=text.match(/blood\s*group\s*([A-Za-z0-9+\-]+)/i);
+
+    person.blood=m?clean(m[1]):"";
+
+    /*=========================
+    NATIONALITY
+    =========================*/
+
+    m=text.match(/\bI am an?\s+(Indian|American|British|Canadian|Australian|Japanese|Chinese|Nepali|Pakistani|Bangladeshi|Sri Lankan)\b/i);
+
+    person.nationality=m?clean(m[1]):"";
+
+    /*=========================
+    RELIGION
+    =========================*/
+
+    m=text.match(/Religion\s*[:\-]\s*([A-Za-z ]+)/i);
+
+    person.religion=m?clean(m[1]):"";
+
+    /*=========================
+    MARITAL STATUS
+    =========================*/
+
+    person.marital="";
+
+    if(/\bunmarried\b/i.test(text))
+        person.marital="Unmarried";
+
+    else if(/\bmarried\b/i.test(text))
+        person.marital="Married";
+
+    return person;
+
+}
 
     /*=========================
     NAME
