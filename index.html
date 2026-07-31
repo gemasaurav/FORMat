@@ -1,13 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FORMat</title>
+<meta
+name="viewport"
+content="width=device-width,initial-scale=1.0">
 
-<link rel="stylesheet" href="style.css">
+<title>
+
+FORMat v4.0
+
+</title>
+
+<link
+rel="stylesheet"
+href="style.css">
 
 </head>
 
@@ -15,156 +25,269 @@
 
 <div class="container">
 
-<div class="header">
+<header class="topHeader">
 
-<h1>📋 FORMat</h1>
+<div class="logo">
 
-<p>Smart Text → Form Converter</p>
+📋
 
 </div>
 
-<div class="input-section">
+<div class="titleBox">
 
-<h2>Paste Text</h2>
+<h1>
+
+FORMat
+
+</h1>
+
+<p>
+
+Smart Paragraph → Form Converter
+
+</p>
+
+</div>
+
+</header>
+
+<section class="inputCard">
+
+<h2>
+
+Paste Paragraph
+
+</h2>
 
 <textarea
+
 id="inputText"
-placeholder="Paste any paragraph, application, resume, biography, report or long text here..."
+
+placeholder="Paste any paragraph, biography, application, FIR, resume, affidavit, profile or document here..."
+
 ></textarea>
 
-<div class="button-group">
+<div class="buttonBar">
 
 <button id="pasteBtn">
+
 📋 Paste
+
 </button>
 
 <button id="clearBtn">
+
 🗑 Clear
+
 </button>
 
 <button id="extractBtn">
+
 🔍 Extract Details
+
 </button>
 
 </div>
 
-</div>
-
-<div id="loading"></div>
-
-<div id="resultCard">
-
-<h2>Extracted Details</h2>
-
-<div class="form">
-
-<div class="field">
-<label>Name</label>
-<input type="text" id="name">
-</div>
-
-<div class="field">
-<label>Father's Name</label>
-<input type="text" id="father">
-</div>
-
-<div class="field">
-<label>Mother's Name</label>
-<input type="text" id="mother">
-</div>
-
-<div class="field">
-<label>Age</label>
-<input type="text" id="age">
-</div>
-
-<div class="field">
-<label>Gender</label>
-<input type="text" id="gender">
-</div>
-
-<div class="field">
-<label>Date of Birth</label>
-<input type="text" id="dob">
-</div>
-
-<div class="field">
-<label>Mobile Number</label>
-<input type="text" id="mobile">
-</div>
-
-<div class="field">
-<label>Alternate Number</label>
-<input type="text" id="alternate">
-</div>
-
-<div class="field">
-<label>Email</label>
-<input type="text" id="email">
-</div>
-
-<div class="field">
-<label>Address</label>
-<textarea id="address"></textarea>
-</div>
-
-<div class="field">
-<label>PIN Code</label>
-<input type="text" id="pincode">
-</div>
-
-<div class="field">
-<label>Occupation</label>
-<input type="text" id="occupation">
-</div>
-
-<div class="field">
-<label>Blood Group</label>
-<input type="text" id="blood">
-</div>
-
-<div class="field">
-<label>Nationality</label>
-<input type="text" id="nationality">
-</div>
-
-<div class="field">
-<label>Marital Status</label>
-<input type="text" id="marital">
-</div>
+<div id="loading">
 
 </div>
 
-<div class="button-group">
+</section>
 
-<button id="copyBtn">
-📋 Copy Details
-</button>
+<section id="resultCard">
 
-<button id="pdfBtn">
-📄 Export PDF
-</button>
+<h2>
 
-<button id="saveBtn">
-💾 Save
+👤 Personal Details
+
+</h2>
+
+<div class="photoSection">
+
+<img
+
+id="profilePhoto"
+
+src="assets/profile.png"
+
+alt="Photo"
+
+>
+
+<input
+
+type="file"
+
+id="photoInput"
+
+accept="image/*"
+
+hidden>
+
+<button id="photoBtn">
+
+📷 Upload Photo
+
 </button>
 
 </div>
 
-</div>
+<div class="formGrid">
+
+<div class="field">
+
+<label>
+
+Full Name
+
+</label>
+
+<input
+type="text"
+id="name">
 
 </div>
 
-<script src="patterns.js"></script>
+<div class="field">
 
-<script src="extractor.js"></script>
+<label>
 
-<script src="pdf.js"></script>
+Father's Name
 
-<script src="app.js"></script>
+</label>
 
-</body>
-</html>
+<input
+type="text"
+id="father">
+
+</div>
+
+<div class="field">
+
+<label>
+
+Mother's Name
+
+</label>
+
+<input
+type="text"
+id="mother">
+
+</div>
+
+<div class="field">
+
+<label>
+
+Spouse Name
+
+</label>
+
+<input
+type="text"
+id="spouse">
+
+</div>
+
+<div class="field">
+
+<label>
+
+Date of Birth
+
+</label>
+
+<input
+type="text"
+id="dob">
+
+</div>
+
+<div class="field">
+
+<label>
+
+Age
+
+</label>
+
+<input
+type="text"
+id="age">
+
+</div>
+
+<div class="field">
+
+<label>
+
+Gender
+
+</label>
+
+<input
+type="text"
+id="gender">
+
+</div>
+
+<div class="field">
+
+<label>
+
+Blood Group
+
+</label>
+
+<input
+type="text"
+id="blood">
+
+</div>
+
+<div class="field">
+
+<label>
+
+Nationality
+
+</label>
+
+<input
+type="text"
+id="nationality">
+
+</div>
+
+<div class="field">
+
+<label>
+
+Religion
+
+</label>
+
+<input
+type="text"
+id="religion">
+
+</div>
+
+<div class="field">
+
+<label>
+
+Marital Status
+
+</label>
+
+<input
+type="text"
+id="marital">
+
+</div>
 <!-- =========================================
 CONTACT DETAILS
 ========================================= -->
@@ -175,46 +298,31 @@ CONTACT DETAILS
 
 </h2>
 
-<div class="form">
+<div class="formGrid">
 
 <div class="field">
-
 <label>Mobile Number</label>
-
 <input type="text" id="mobile">
-
 </div>
 
 <div class="field">
-
 <label>Alternate Mobile</label>
-
 <input type="text" id="alternate">
-
 </div>
 
 <div class="field">
-
 <label>WhatsApp Number</label>
-
 <input type="text" id="whatsapp">
-
 </div>
 
 <div class="field">
-
 <label>Email Address</label>
-
 <input type="text" id="email">
-
 </div>
 
 <div class="field">
-
 <label>Website</label>
-
 <input type="text" id="website">
-
 </div>
 
 </div>
@@ -229,97 +337,67 @@ ADDRESS DETAILS
 
 </h2>
 
-<div class="form">
+<div class="formGrid">
 
 <div class="field">
-
 <label>House / Flat No.</label>
-
 <input type="text" id="house">
-
 </div>
 
 <div class="field">
-
 <label>Street / Road</label>
-
 <input type="text" id="street">
-
 </div>
 
 <div class="field">
-
 <label>Area / Locality</label>
-
 <input type="text" id="area">
-
 </div>
 
 <div class="field">
-
 <label>Village / Town</label>
-
 <input type="text" id="village">
-
 </div>
 
 <div class="field">
-
 <label>City</label>
-
 <input type="text" id="city">
-
 </div>
 
 <div class="field">
-
 <label>District</label>
-
 <input type="text" id="district">
-
 </div>
 
 <div class="field">
-
 <label>State</label>
-
 <input type="text" id="state">
-
 </div>
 
 <div class="field">
-
 <label>Country</label>
-
 <input type="text" id="country">
-
 </div>
 
 <div class="field">
-
 <label>PIN Code</label>
-
 <input type="text" id="pincode">
-
 </div>
 
-<div class="field">
+<div class="field fullWidth">
 
 <label>Complete Address</label>
 
 <textarea
-
 id="address"
-
-rows="4"
-
-></textarea>
+rows="4"></textarea>
 
 </div>
 
 </div>
+
 <!-- =========================================
-GOVERNMENT IDs
+GOVERNMENT ID DETAILS
 ========================================= -->
 
 <h2>
@@ -328,54 +406,36 @@ GOVERNMENT IDs
 
 </h2>
 
-<div class="form">
+<div class="formGrid">
 
 <div class="field">
-
 <label>Aadhaar Number</label>
-
 <input type="text" id="aadhaar">
-
 </div>
 
 <div class="field">
-
 <label>PAN Number</label>
-
 <input type="text" id="pan">
-
 </div>
 
 <div class="field">
-
 <label>Passport Number</label>
-
 <input type="text" id="passport">
-
 </div>
 
 <div class="field">
-
 <label>Driving Licence</label>
-
-<input type="text" id="dl">
-
+<input type="text" id="drivingLicence">
 </div>
 
 <div class="field">
-
 <label>Voter ID</label>
-
-<input type="text" id="voter">
-
+<input type="text" id="voterId">
 </div>
 
 <div class="field">
-
 <label>GST Number</label>
-
 <input type="text" id="gst">
-
 </div>
 
 </div>
@@ -390,54 +450,36 @@ BANK DETAILS
 
 </h2>
 
-<div class="form">
+<div class="formGrid">
 
 <div class="field">
-
 <label>Bank Name</label>
-
 <input type="text" id="bank">
-
 </div>
 
 <div class="field">
-
 <label>Branch Name</label>
-
 <input type="text" id="branch">
-
 </div>
 
 <div class="field">
-
 <label>Account Number</label>
-
 <input type="text" id="account">
-
 </div>
 
 <div class="field">
-
 <label>IFSC Code</label>
-
 <input type="text" id="ifsc">
-
 </div>
 
 <div class="field">
-
 <label>MICR Code</label>
-
 <input type="text" id="micr">
-
 </div>
 
 <div class="field">
-
 <label>UPI ID</label>
-
 <input type="text" id="upi">
-
 </div>
 
 </div>
@@ -452,30 +494,26 @@ VEHICLE DETAILS
 
 </h2>
 
-<div class="form">
+<div class="formGrid">
 
 <div class="field">
-
 <label>Vehicle Number</label>
-
-<input type="text" id="vehicle">
-
+<input type="text" id="vehicleNumber">
 </div>
 
 <div class="field">
-
 <label>Vehicle Type</label>
-
 <input type="text" id="vehicleType">
-
 </div>
 
 <div class="field">
+<label>Registration Number</label>
+<input type="text" id="registrationNumber">
+</div>
 
+<div class="field">
 <label>Registration Date</label>
-
 <input type="text" id="registrationDate">
-
 </div>
 
 </div>
@@ -489,7 +527,7 @@ EDUCATION
 
 </h2>
 
-<div class="form">
+<div class="formGrid">
 
 <div class="field">
 <label>School</label>
@@ -511,6 +549,16 @@ EDUCATION
 <input type="text" id="qualification">
 </div>
 
+<div class="field">
+<label>Class / Course</label>
+<input type="text" id="course">
+</div>
+
+<div class="field">
+<label>Year</label>
+<input type="text" id="year">
+</div>
+
 </div>
 
 <!-- =========================================
@@ -523,7 +571,7 @@ EMPLOYMENT
 
 </h2>
 
-<div class="form">
+<div class="formGrid">
 
 <div class="field">
 <label>Occupation</label>
@@ -531,7 +579,7 @@ EMPLOYMENT
 </div>
 
 <div class="field">
-<label>Company</label>
+<label>Company / Organization</label>
 <input type="text" id="company">
 </div>
 
@@ -553,19 +601,23 @@ NOTES
 
 <h2>
 
-📝 Notes
+📝 Additional Notes
 
 </h2>
 
-<div class="form">
+<div class="formGrid">
 
-<div class="field">
+<div class="field fullWidth">
 
 <label>Remarks</label>
 
 <textarea
+
 id="remarks"
-rows="5"></textarea>
+
+rows="5"
+
+></textarea>
 
 </div>
 
@@ -575,17 +627,11 @@ rows="5"></textarea>
 ACTION BUTTONS
 ========================================= -->
 
-<div class="button-group">
+<div class="buttonBar bottomButtons">
 
 <button id="copyBtn">
 
-📋 Copy
-
-</button>
-
-<button id="saveBtn">
-
-💾 Save
+📋 Copy Form
 
 </button>
 
@@ -598,6 +644,12 @@ ACTION BUTTONS
 <button id="printBtn">
 
 🖨 Print
+
+</button>
+
+<button id="saveBtn">
+
+💾 Save
 
 </button>
 
