@@ -1,9 +1,13 @@
-/* ==========================================
-FORMat
-Main Controller
-Version 2.1
+/*=========================================================
+FORMat Lite v1.0
 Created for Gema
-========================================== */
+=========================================================*/
+
+"use strict";
+
+/*=========================================================
+ELEMENTS
+=========================================================*/
 
 const inputText=document.getElementById("inputText");
 
@@ -11,146 +15,203 @@ const extractBtn=document.getElementById("extractBtn");
 
 const clearBtn=document.getElementById("clearBtn");
 
-const pasteBtn=document.getElementById("pasteBtn");
-
 const copyBtn=document.getElementById("copyBtn");
-
-const pdfBtn=document.getElementById("pdfBtn");
-
-const saveBtn=document.getElementById("saveBtn");
 
 const loading=document.getElementById("loading");
 
-/* =======================================
-CLEAR
-======================================= */
+/*=========================================================
+BUTTON EVENTS
+=========================================================*/
 
-clearBtn.onclick=function(){
+extractBtn.addEventListener("click",extractData);
 
-inputText.value="";
+clearBtn.addEventListener("click",clearAll);
 
-document.querySelectorAll("input").forEach(i=>i.value="");
+copyBtn.addEventListener("click",copyForm);
 
-document.querySelectorAll("textarea").forEach(t=>{
+/*=========================================================
+MAIN FUNCTION
+=========================================================*/
 
-if(t.id!="inputText"){
+function extractData(){
 
-t.value="";
+const text=inputText.value.trim();
+
+if(text===""){
+
+alert("Please paste a paragraph.");
+
+return;
 
 }
 
-});
+loading.innerHTML="Reading Paragraph...";
+
+setTimeout(function(){
+
+processParagraph(text);
 
 loading.innerHTML="";
 
-};
-
-/* =======================================
-PASTE
-======================================= */
-
-pasteBtn.onclick=async function(){
-
-try{
-
-const txt=await navigator.clipboard.readText();
-
-inputText.value=txt;
+},200);
 
 }
 
-catch{
+/*=========================================================
+PROCESS PARAGRAPH
+=========================================================*/
 
-alert("Clipboard Permission Denied");
+function processParagraph(text){
+
+clearFields();
+
+text=text.replace(/\n/g," ");
+
+extractName(text);
+
+extractFather(text);
+
+extractAge(text);
+
+extractDOB(text);
+
+extractGender(text);
+
+extractMobile(text);
+
+extractEmail(text);
+
+extractBlood(text);
+
+extractNationality(text);
+
+extractMarital(text);
+
+extractOccupation(text);
+
+extractAddress(text);
 
 }
 
-};
+/*=========================================================
+SET VALUE
+=========================================================*/
 
-/* =======================================
-EXTRACT
-======================================= */
+function setValue(id,value){
 
-extractBtn.onclick=function(){
+const box=document.getElementById(id);
 
-loading.innerHTML="🔍 Reading Paragraph...";
+if(box){
 
-extractData(inputText.value);
+box.value=value;
 
-loading.innerHTML="";
+}
 
-};
+}
 
-/* =======================================
-COPY
-======================================= */
+/*=========================================================
+GET MATCH
+=========================================================*/
 
-copyBtn.onclick=function(){
+function getMatch(text,regex){
 
-let text="";
+const m=text.match(regex);
 
-document.querySelectorAll(".field").forEach(field=>{
+if(m){
 
-const label=field.querySelector("label").innerText;
+return m[1].trim();
 
-const value=field.querySelector("input,textarea").value;
+}
 
-text+=label+" : "+value+"\n";
+return "";
 
-});
+}
+/*=========================================================
+NAME
+=========================================================*/
 
-navigator.clipboard.writeText(text);
+function extractName(text){
 
-alert("Copied Successfully");
+let name=getMatch(
 
-};
+text,
 
-/* =======================================
-PDF
-======================================= */
-
-pdfBtn.onclick=function(){
-
-generatePDF();
-
-};
-
-/* =======================================
-SAVE
-======================================= */
-
-saveBtn.onclick=function(){
-
-localStorage.setItem(
-
-"FORMAT_LAST_FORM",
-
-JSON.stringify(getAllFields())
+/my\s+name\s+is\s+(.+?)(?=\s+S\/o|\s+D\/o|\s+W\/o|\.|,)/i
 
 );
 
-alert("Saved Successfully");
+setValue("name",name);
 
-};
+}
 
-/* =======================================
-GET ALL FIELDS
-======================================= */
+/*=========================================================
+FATHER
+=========================================================*/
 
-function getAllFields(){
+function extractFather(text){
 
-let obj={};
+let father=getMatch(
 
-document.querySelectorAll(".field").forEach(field=>{
+text,
 
-const label=field.querySelector("label").innerText;
+/S\/o\s+(.+?)(?=\s+R\/o|\.|,)/i
 
-const value=field.querySelector("input,textarea").value;
+);
 
-obj[label]=value;
+setValue("father",father);
 
-});
+}
 
-return obj;
+/*=========================================================
+AGE
+=========================================================*/
+
+function extractAge(text){
+
+let age=getMatch(
+
+text,
+
+/(\d{1,3})\s+years?\s+old/i
+
+);
+
+setValue("age",age);
+
+}
+
+/*=========================================================
+DATE OF BIRTH
+=========================================================*/
+
+function extractDOB(text){
+
+let dob=getMatch(
+
+text,
+
+/date\s+of\s+birth\s*(?:is|:)?\s*(.+?)(?=\.\s|$)/i
+
+);
+
+setValue("dob",dob);
+
+}
+
+/*=========================================================
+GENDER
+=========================================================*/
+
+function extractGender(text){
+
+let gender="";
+
+if(/\bfemale\b|\bgirl\b/i.test(text))
+gender="Female";
+
+if(/\bmale\b|\bboy\b/i.test(text))
+gender="Male";
+
+setValue("gender",gender);
 
 }
