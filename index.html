@@ -11,7 +11,7 @@ content="width=device-width,initial-scale=1.0">
 
 <title>
 
-FORMat v4.0
+FORMat Lite
 
 </title>
 
@@ -25,33 +25,23 @@ href="style.css">
 
 <div class="container">
 
-<header class="topHeader">
-
-<div class="logo">
-
-📋
-
-</div>
-
-<div class="titleBox">
+<header>
 
 <h1>
 
-FORMat
+📋 FORMat Lite
 
 </h1>
 
 <p>
 
-Smart Paragraph → Form Converter
+Paragraph to Form Converter
 
 </p>
 
-</div>
-
 </header>
 
-<section class="inputCard">
+<section class="inputSection">
 
 <h2>
 
@@ -63,27 +53,21 @@ Paste Paragraph
 
 id="inputText"
 
-placeholder="Paste any paragraph, biography, application, FIR, resume, affidavit, profile or document here..."
+placeholder="Paste any paragraph here..."
 
 ></textarea>
 
-<div class="buttonBar">
+<div class="buttons">
 
-<button id="pasteBtn">
+<button id="extractBtn">
 
-📋 Paste
+🔍 Extract
 
 </button>
 
 <button id="clearBtn">
 
 🗑 Clear
-
-</button>
-
-<button id="extractBtn">
-
-🔍 Extract Details
 
 </button>
 
@@ -95,47 +79,27 @@ placeholder="Paste any paragraph, biography, application, FIR, resume, affidavit
 
 </section>
 
-<section id="resultCard">
+<section class="resultSection">
 
 <h2>
 
-👤 Personal Details
+Personal Details
 
 </h2>
 
-<div class="photoSection">
+<div class="photoBox">
 
 <img
 
-id="profilePhoto"
-
 src="assets/profile.png"
 
-alt="Photo"
+id="photo"
 
 >
 
-<input
-
-type="file"
-
-id="photoInput"
-
-accept="image/*"
-
-hidden>
-
-<button id="photoBtn">
-
-📷 Upload Photo
-
-</button>
-
 </div>
 
-<div class="formGrid">
-
-<div class="field">
+<div class="grid">
 
 <label>
 
@@ -144,68 +108,18 @@ Full Name
 </label>
 
 <input
-type="text"
-id="name">
-
-</div>
-
-<div class="field">
+id="name"
+type="text">
 
 <label>
 
-Father's Name
+Father Name
 
 </label>
 
 <input
-type="text"
-id="father">
-
-</div>
-
-<div class="field">
-
-<label>
-
-Mother's Name
-
-</label>
-
-<input
-type="text"
-id="mother">
-
-</div>
-
-<div class="field">
-
-<label>
-
-Spouse Name
-
-</label>
-
-<input
-type="text"
-id="spouse">
-
-</div>
-
-<div class="field">
-
-<label>
-
-Date of Birth
-
-</label>
-
-<input
-type="text"
-id="dob">
-
-</div>
-
-<div class="field">
+id="father"
+type="text">
 
 <label>
 
@@ -214,12 +128,18 @@ Age
 </label>
 
 <input
-type="text"
-id="age">
+id="age"
+type="text">
 
-</div>
+<label>
 
-<div class="field">
+Date of Birth
+
+</label>
+
+<input
+id="dob"
+type="text">
 
 <label>
 
@@ -228,451 +148,15 @@ Gender
 </label>
 
 <input
-type="text"
-id="gender">
-
-</div>
-
-<div class="field">
+id="gender"
+type="text">
 
 <label>
 
-Blood Group
+Mobile Number
 
 </label>
 
 <input
-type="text"
-id="blood">
-
-</div>
-
-<div class="field">
-
-<label>
-
-Nationality
-
-</label>
-
-<input
-type="text"
-id="nationality">
-
-</div>
-
-<div class="field">
-
-<label>
-
-Religion
-
-</label>
-
-<input
-type="text"
-id="religion">
-
-</div>
-
-<div class="field">
-
-<label>
-
-Marital Status
-
-</label>
-
-<input
-type="text"
-id="marital">
-
-</div>
-<!-- =========================================
-CONTACT DETAILS
-========================================= -->
-
-<h2>
-
-📞 Contact Details
-
-</h2>
-
-<div class="formGrid">
-
-<div class="field">
-<label>Mobile Number</label>
-<input type="text" id="mobile">
-</div>
-
-<div class="field">
-<label>Alternate Mobile</label>
-<input type="text" id="alternate">
-</div>
-
-<div class="field">
-<label>WhatsApp Number</label>
-<input type="text" id="whatsapp">
-</div>
-
-<div class="field">
-<label>Email Address</label>
-<input type="text" id="email">
-</div>
-
-<div class="field">
-<label>Website</label>
-<input type="text" id="website">
-</div>
-
-</div>
-
-<!-- =========================================
-ADDRESS DETAILS
-========================================= -->
-
-<h2>
-
-🏠 Address Details
-
-</h2>
-
-<div class="formGrid">
-
-<div class="field">
-<label>House / Flat No.</label>
-<input type="text" id="house">
-</div>
-
-<div class="field">
-<label>Street / Road</label>
-<input type="text" id="street">
-</div>
-
-<div class="field">
-<label>Area / Locality</label>
-<input type="text" id="area">
-</div>
-
-<div class="field">
-<label>Village / Town</label>
-<input type="text" id="village">
-</div>
-
-<div class="field">
-<label>City</label>
-<input type="text" id="city">
-</div>
-
-<div class="field">
-<label>District</label>
-<input type="text" id="district">
-</div>
-
-<div class="field">
-<label>State</label>
-<input type="text" id="state">
-</div>
-
-<div class="field">
-<label>Country</label>
-<input type="text" id="country">
-</div>
-
-<div class="field">
-<label>PIN Code</label>
-<input type="text" id="pincode">
-</div>
-
-<div class="field fullWidth">
-
-<label>Complete Address</label>
-
-<textarea
-id="address"
-rows="4"></textarea>
-
-</div>
-
-</div>
-
-<!-- =========================================
-GOVERNMENT ID DETAILS
-========================================= -->
-
-<h2>
-
-🪪 Government Identity Details
-
-</h2>
-
-<div class="formGrid">
-
-<div class="field">
-<label>Aadhaar Number</label>
-<input type="text" id="aadhaar">
-</div>
-
-<div class="field">
-<label>PAN Number</label>
-<input type="text" id="pan">
-</div>
-
-<div class="field">
-<label>Passport Number</label>
-<input type="text" id="passport">
-</div>
-
-<div class="field">
-<label>Driving Licence</label>
-<input type="text" id="drivingLicence">
-</div>
-
-<div class="field">
-<label>Voter ID</label>
-<input type="text" id="voterId">
-</div>
-
-<div class="field">
-<label>GST Number</label>
-<input type="text" id="gst">
-</div>
-
-</div>
-
-<!-- =========================================
-BANK DETAILS
-========================================= -->
-
-<h2>
-
-🏦 Bank Details
-
-</h2>
-
-<div class="formGrid">
-
-<div class="field">
-<label>Bank Name</label>
-<input type="text" id="bank">
-</div>
-
-<div class="field">
-<label>Branch Name</label>
-<input type="text" id="branch">
-</div>
-
-<div class="field">
-<label>Account Number</label>
-<input type="text" id="account">
-</div>
-
-<div class="field">
-<label>IFSC Code</label>
-<input type="text" id="ifsc">
-</div>
-
-<div class="field">
-<label>MICR Code</label>
-<input type="text" id="micr">
-</div>
-
-<div class="field">
-<label>UPI ID</label>
-<input type="text" id="upi">
-</div>
-
-</div>
-
-<!-- =========================================
-VEHICLE DETAILS
-========================================= -->
-
-<h2>
-
-🚗 Vehicle Details
-
-</h2>
-
-<div class="formGrid">
-
-<div class="field">
-<label>Vehicle Number</label>
-<input type="text" id="vehicleNumber">
-</div>
-
-<div class="field">
-<label>Vehicle Type</label>
-<input type="text" id="vehicleType">
-</div>
-
-<div class="field">
-<label>Registration Number</label>
-<input type="text" id="registrationNumber">
-</div>
-
-<div class="field">
-<label>Registration Date</label>
-<input type="text" id="registrationDate">
-</div>
-
-</div>
-<!-- =========================================
-EDUCATION
-========================================= -->
-
-<h2>
-
-🎓 Education Details
-
-</h2>
-
-<div class="formGrid">
-
-<div class="field">
-<label>School</label>
-<input type="text" id="school">
-</div>
-
-<div class="field">
-<label>College</label>
-<input type="text" id="college">
-</div>
-
-<div class="field">
-<label>University</label>
-<input type="text" id="university">
-</div>
-
-<div class="field">
-<label>Qualification</label>
-<input type="text" id="qualification">
-</div>
-
-<div class="field">
-<label>Class / Course</label>
-<input type="text" id="course">
-</div>
-
-<div class="field">
-<label>Year</label>
-<input type="text" id="year">
-</div>
-
-</div>
-
-<!-- =========================================
-EMPLOYMENT
-========================================= -->
-
-<h2>
-
-💼 Employment Details
-
-</h2>
-
-<div class="formGrid">
-
-<div class="field">
-<label>Occupation</label>
-<input type="text" id="occupation">
-</div>
-
-<div class="field">
-<label>Company / Organization</label>
-<input type="text" id="company">
-</div>
-
-<div class="field">
-<label>Designation</label>
-<input type="text" id="designation">
-</div>
-
-<div class="field">
-<label>Experience</label>
-<input type="text" id="experience">
-</div>
-
-</div>
-
-<!-- =========================================
-NOTES
-========================================= -->
-
-<h2>
-
-📝 Additional Notes
-
-</h2>
-
-<div class="formGrid">
-
-<div class="field fullWidth">
-
-<label>Remarks</label>
-
-<textarea
-
-id="remarks"
-
-rows="5"
-
-></textarea>
-
-</div>
-
-</div>
-
-<!-- =========================================
-ACTION BUTTONS
-========================================= -->
-
-<div class="buttonBar bottomButtons">
-
-<button id="copyBtn">
-
-📋 Copy Form
-
-</button>
-
-<button id="pdfBtn">
-
-📄 Export PDF
-
-</button>
-
-<button id="printBtn">
-
-🖨 Print
-
-</button>
-
-<button id="saveBtn">
-
-💾 Save
-
-</button>
-
-<button id="shareBtn">
-
-📤 Share
-
-</button>
-
-</div>
-
-</section>
-
-</div>
-
-<script src="patterns.js"></script>
-
-<script src="extractor.js"></script>
-
-<script src="pdf.js"></script>
-
-<script src="app.js"></script>
-
-</body>
-
-</html>
+id="mobile"
+type="text">
