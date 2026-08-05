@@ -18,13 +18,14 @@ function generatePDF(){
 
     /* Photo Placeholder */
 
-    doc.rect(155,15,35,45);
+doc.rect(155,30,35,45);
 
-    doc.setFontSize(10);
-    doc.setFont("helvetica","normal");
-    doc.text("PHOTO",166,40);
+doc.setFontSize(10);
+doc.text("PHOTO",166,55);
 
-    let y=38;
+/* Start details below the heading */
+
+let y = 40;
 
     const fields=[
 
