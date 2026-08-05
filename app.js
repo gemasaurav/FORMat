@@ -286,3 +286,111 @@ function extractMarital(text){}
 function extractOccupation(text){}
 
 function extractAddress(text){}
+/*=========================================================
+GENDER
+=========================================================*/
+
+function extractGender(text){
+
+let gender="";
+
+if(/\bfemale\b/i.test(text)) gender="Female";
+else if(/\bmale\b/i.test(text)) gender="Male";
+else if(/\bgirl\b/i.test(text)) gender="Female";
+else if(/\bboy\b/i.test(text)) gender="Male";
+
+setValue("gender",gender);
+
+}
+
+/*=========================================================
+MOBILE NUMBER
+=========================================================*/
+
+function extractMobile(text){
+
+let match=text.match(/\b([6-9]\d{9})\b/);
+
+if(match){
+
+setValue("mobile",match[1]);
+
+}
+
+}
+
+/*=========================================================
+EMAIL
+=========================================================*/
+
+function extractEmail(text){
+
+let match=text.match(
+
+/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/
+
+);
+
+if(match){
+
+setValue("email",match[0]);
+
+}
+
+}
+
+/*=========================================================
+BLOOD GROUP
+=========================================================*/
+
+function extractBlood(text){
+
+let match=text.match(
+
+/blood\s*group\s*([ABO]{1,2}[+-])/i
+
+);
+
+if(match){
+
+setValue("blood",match[1].toUpperCase());
+
+}
+
+}
+
+/*=========================================================
+NATIONALITY
+=========================================================*/
+
+function extractNationality(text){
+
+let match=text.match(
+
+/I am an?\s+(Indian|American|British|Canadian|Australian|Japanese|Chinese|Nepali|Pakistani|Bangladeshi|Sri Lankan)/i
+
+);
+
+if(match){
+
+setValue("nationality",match[1]);
+
+}
+
+}
+
+/*=========================================================
+MARITAL STATUS
+=========================================================*/
+
+function extractMarital(text){
+
+if(/\bunmarried\b/i.test(text))
+
+setValue("marital","Unmarried");
+
+else if(/\bmarried\b/i.test(text))
+
+setValue("marital","Married");
+
+}
