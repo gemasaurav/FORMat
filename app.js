@@ -1,6 +1,6 @@
 /*=========================================================
 FORMat Lite v1.0
-Created by Gema
+Created for Gema
 =========================================================*/
 
 "use strict";
@@ -10,11 +10,10 @@ ELEMENTS
 =========================================================*/
 
 const inputText = document.getElementById("inputText");
-
 const extractBtn = document.getElementById("extractBtn");
 const clearBtn = document.getElementById("clearBtn");
 const copyBtn = document.getElementById("copyBtn");
-
+const pdfBtn = document.getElementById("pdfBtn");
 const loading = document.getElementById("loading");
 
 /*=========================================================
@@ -25,372 +24,291 @@ extractBtn.addEventListener("click", extractData);
 clearBtn.addEventListener("click", clearForm);
 copyBtn.addEventListener("click", copyForm);
 
+if (pdfBtn) {
+    pdfBtn.addEventListener("click", function () {
+        if (typeof generatePDF === "function") {
+            generatePDF();
+        } else {
+            alert("PDF feature will be added later.");
+        }
+    });
+}
+
 /*=========================================================
 MAIN EXTRACT FUNCTION
 =========================================================*/
 
-function extractData(){
-
+function extractData() {
     const text = inputText.value.trim();
 
-    if(text===""){
-
+    if (text === "") {
         alert("Please paste a paragraph.");
-
         return;
-
     }
 
-    loading.innerHTML="Reading Paragraph...";
-
+    loading.innerHTML = "Reading Paragraph...";
     clearFields();
 
-    setTimeout(function(){
-
+    setTimeout(function () {
         processText(text);
-
-        loading.innerHTML="";
-
-    },100);
-
+        loading.innerHTML = "";
+    }, 100);
 }
 
 /*=========================================================
 PROCESS TEXT
 =========================================================*/
 
-function processText(text){
-
+function processText(text) {
     extractName(text);
-
     extractFather(text);
-
     extractAge(text);
-
     extractDOB(text);
-
     extractGender(text);
-
     extractMobile(text);
-
     extractEmail(text);
-
     extractBlood(text);
-
     extractNationality(text);
-
     extractMarital(text);
-
     extractOccupation(text);
-
     extractAddress(text);
-
 }
 
 /*=========================================================
 HELPER
 =========================================================*/
 
-function setValue(id,value){
-
-    const box=document.getElementById(id);
-
-    if(box){
-
-        box.value=value || "";
-
+function setValue(id, value) {
+    const box = document.getElementById(id);
+    if (box) {
+        box.value = value || "";
     }
+}
 
+function firstMatch(text, regex) {
+    const m = text.match(regex);
+    return m ? m[1].trim() : "";
 }
 
 /*=========================================================
 CLEAR RESULT FIELDS
 =========================================================*/
 
-function clearFields(){
+function clearFields() {
+    const ids = [
+        "name",
+        "father",
+        "age",
+        "dob",
+        "gender",
+        "mobile",
+        "email",
+        "blood",
+        "nationality",
+        "marital",
+        "occupation",
+        "address"
+    ];
 
-const ids=[
-
-"name",
-
-"father",
-
-"age",
-
-"dob",
-
-"gender",
-
-"mobile",
-
-"email",
-
-"blood",
-
-"nationality",
-
-"marital",
-
-"occupation",
-
-"address"
-
-];
-
-ids.forEach(function(id){
-
-setValue(id,"");
-
-});
-
+    ids.forEach(function (id) {
+        setValue(id, "");
+    });
 }
 
 /*=========================================================
 CLEAR FORM
 =========================================================*/
 
-function clearForm(){
-
-inputText.value="";
-
-clearFields();
-
-loading.innerHTML="";
-
+function clearForm() {
+    inputText.value = "";
+    clearFields();
+    loading.innerHTML = "";
 }
 
 /*=========================================================
 COPY FORM
 =========================================================*/
 
-function copyForm(){
+function copyForm() {
+    let text = "";
 
-let text="";
+    document.querySelectorAll(".field").forEach(function (field) {
+        const label = field.querySelector("label");
+        const input = field.querySelector("input,textarea");
 
-document.querySelectorAll(".field").forEach(function(field){
+        if (label && input) {
+            text += label.innerText + ": " + input.value + "\n";
+        }
+    });
 
-const label=field.querySelector("label");
-
-const input=field.querySelector("input,textarea");
-
-if(label && input){
-
-text+=label.innerText+": "+input.value+"\n";
-
+    navigator.clipboard.writeText(text);
+    alert("Form copied successfully.");
 }
 
-});
-
-navigator.clipboard.writeText(text);
-
-alert("Form copied successfully.");
-
-}
 /*=========================================================
 NAME
 =========================================================*/
 
-function extractName(text){
+function extractName(text) {
+    let match = firstMatch(
+        text,
+        /my\s+name\s+is\s+(.+?)(?=\s+S\/o|\s+D\/o|\s+W\/o|\s+R\/o|,|\.|$)/i
+    );
 
-let match=text.match(
-
-/my\s+name\s+is\s+(.+?)(?=\s+S\/o|\s+D\/o|\s+W\/o|,|\.|$)/i
-
-);
-
-if(match){
-
-setValue("name",match[1].trim());
-
-}
-
+    setValue("name", match);
 }
 
 /*=========================================================
 FATHER NAME
 =========================================================*/
 
-function extractFather(text){
+function extractFather(text) {
+    let match = firstMatch(
+        text,
+        /S\/o\s+(.+?)(?=\s+R\/o|,|\.|$)/i
+    );
 
-let match=text.match(
-
-/S\/o\s+(.+?)(?=\s+R\/o|,|\.|$)/i
-
-);
-
-if(match){
-
-setValue("father",match[1].trim());
-
-}
-
+    setValue("father", match);
 }
 
 /*=========================================================
 AGE
 =========================================================*/
 
-function extractAge(text){
+function extractAge(text) {
+    let match = firstMatch(
+        text,
+        /(\d{1,3})\s+years?\s+old/i
+    );
 
-let match=text.match(
-
-/(\d{1,3})\s+years?\s+old/i
-
-);
-
-if(match){
-
-setValue("age",match[1]);
-
-}
-
+    setValue("age", match);
 }
 
 /*=========================================================
 DATE OF BIRTH
 =========================================================*/
 
-function extractDOB(text){
+function extractDOB(text) {
+    let match = firstMatch(
+        text,
+        /date\s+of\s+birth\s*(?:is|:)?\s*(.+?)(?=\.\s|$)/i
+    );
 
-let match=text.match(
-
-/date\s+of\s+birth\s*(?:is|:)?\s*([A-Za-z]{3,9}\.?\s*\d{1,2},?\s*\d{4})/i
-
-);
-
-if(match){
-
-setValue("dob",match[1].trim());
-
+    setValue("dob", match);
 }
 
-}
-
-/*=========================================================
-PLACEHOLDER FUNCTIONS
-(Will be completed in Part 3)
-=========================================================*/
-
-function extractGender(text){}
-
-function extractMobile(text){}
-
-function extractEmail(text){}
-
-function extractBlood(text){}
-
-function extractNationality(text){}
-
-function extractMarital(text){}
-
-function extractOccupation(text){}
-
-function extractAddress(text){}
 /*=========================================================
 GENDER
 =========================================================*/
 
-function extractGender(text){
+function extractGender(text) {
+    let gender = "";
 
-let gender="";
+    if (/\bfemale\b/i.test(text)) gender = "Female";
+    else if (/\bmale\b/i.test(text)) gender = "Male";
+    else if (/\bgirl\b/i.test(text)) gender = "Female";
+    else if (/\bboy\b/i.test(text)) gender = "Male";
 
-if(/\bfemale\b/i.test(text)) gender="Female";
-else if(/\bmale\b/i.test(text)) gender="Male";
-else if(/\bgirl\b/i.test(text)) gender="Female";
-else if(/\bboy\b/i.test(text)) gender="Male";
-
-setValue("gender",gender);
-
+    setValue("gender", gender);
 }
 
 /*=========================================================
 MOBILE NUMBER
 =========================================================*/
 
-function extractMobile(text){
-
-let match=text.match(/\b([6-9]\d{9})\b/);
-
-if(match){
-
-setValue("mobile",match[1]);
-
-}
-
+function extractMobile(text) {
+    let match = firstMatch(text, /\b([6-9]\d{9})\b/);
+    setValue("mobile", match);
 }
 
 /*=========================================================
 EMAIL
 =========================================================*/
 
-function extractEmail(text){
-
-let match=text.match(
-
-/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/
-
-);
-
-if(match){
-
-setValue("email",match[0]);
-
-}
-
+function extractEmail(text) {
+    let match = text.match(/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}/);
+    setValue("email", match ? match[0] : "");
 }
 
 /*=========================================================
 BLOOD GROUP
 =========================================================*/
 
-function extractBlood(text){
+function extractBlood(text) {
+    let match = firstMatch(text, /\bblood\s*group\s*([ABO]{1,2}[+-])/i);
 
-let match=text.match(
+    if (!match) {
+        match = firstMatch(text, /\b(A|B|AB|O)[+-]\b/i);
+    }
 
-/blood\s*group\s*([ABO]{1,2}[+-])/i
-
-);
-
-if(match){
-
-setValue("blood",match[1].toUpperCase());
-
-}
-
+    setValue("blood", match ? match.toUpperCase() : "");
 }
 
 /*=========================================================
 NATIONALITY
 =========================================================*/
 
-function extractNationality(text){
+function extractNationality(text) {
+    let match = firstMatch(
+        text,
+        /I am an?\s+(Indian|American|British|Canadian|Australian|Japanese|Chinese|Nepali|Pakistani|Bangladeshi|Sri Lankan)/i
+    );
 
-let match=text.match(
-
-/I am an?\s+(Indian|American|British|Canadian|Australian|Japanese|Chinese|Nepali|Pakistani|Bangladeshi|Sri Lankan)/i
-
-);
-
-if(match){
-
-setValue("nationality",match[1]);
-
-}
-
+    setValue("nationality", match);
 }
 
 /*=========================================================
 MARITAL STATUS
 =========================================================*/
 
-function extractMarital(text){
+function extractMarital(text) {
+    if (/\bunmarried\b/i.test(text)) {
+        setValue("marital", "Unmarried");
+    } else if (/\bmarried\b/i.test(text)) {
+        setValue("marital", "Married");
+    }
+}
 
-if(/\bunmarried\b/i.test(text))
+/*=========================================================
+OCCUPATION
+=========================================================*/
 
-setValue("marital","Unmarried");
+function extractOccupation(text) {
+    let match = firstMatch(text, /i\s+am\s+a[n]?\s+([A-Za-z ]+?)(?=\.|,|$)/i);
 
-else if(/\bmarried\b/i.test(text))
+    if (!match) {
+        match = firstMatch(text, /occupation\s*[:\-]\s*([A-Za-z ]+)/i);
+    }
 
-setValue("marital","Married");
+    setValue("occupation", match);
+}
 
+/*=========================================================
+ADDRESS
+=========================================================*/
+
+function extractAddress(text) {
+    let address = "";
+
+    let r = text.match(/R\/o\s+([^\.]+?)(?=\s+I\s+live|\s+I\s+am|\.|$)/i);
+    if (r) address = r[1].trim();
+
+    let cityPin = text.match(/I\s+live\s+in\s+([A-Za-z ]+?)-?(\d{6})/i);
+    if (cityPin) {
+        let city = cityPin[1].trim();
+        let pin = cityPin[2].trim();
+
+        if (!address) address = city;
+        else if (!address.toLowerCase().includes(city.toLowerCase())) address += ", " + city;
+
+        setValue("address", address);
+        return;
+    }
+
+    let cityOnly = text.match(/I\s+live\s+in\s+([A-Za-z ]+)/i);
+    if (cityOnly && !address) {
+        address = cityOnly[1].trim();
+    }
+
+    setValue("address", address);
 }
