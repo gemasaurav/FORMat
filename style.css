@@ -286,3 +286,164 @@ min-height:90px;
 grid-column:1 / span 2;
 
 }
+/*=========================================================
+RESPONSIVE DESIGN
+=========================================================*/
+
+@media (max-width:768px){
+
+body{
+
+padding:10px;
+
+}
+
+.container{
+
+border-radius:10px;
+
+}
+
+header{
+
+padding:20px;
+
+}
+
+header h1{
+
+font-size:28px;
+
+}
+
+header p{
+
+font-size:14px;
+
+}
+
+.formGrid{
+
+grid-template-columns:1fr;
+
+}
+
+.fullWidth{
+
+grid-column:auto;
+
+}
+
+.photoArea img{
+
+width:120px;
+
+height:120px;
+
+}
+
+.buttonRow{
+
+flex-direction:column;
+
+}
+
+.buttonRow button{
+
+width:100%;
+
+}
+
+}
+
+/*=========================================================
+PRINT / PDF
+=========================================================*/
+
+@media print{
+
+body{
+
+background:#ffffff;
+
+padding:0;
+
+}
+
+.container{
+
+box-shadow:none;
+
+border:none;
+
+max-width:100%;
+
+}
+
+.buttonRow,
+
+#loading{
+
+display:none !important;
+
+}
+
+header{
+
+background:#ffffff;
+
+color:#000000;
+
+border-bottom:2px solid #000;
+
+}
+
+input,
+
+textarea{
+
+border:none;
+
+box-shadow:none;
+
+background:#ffffff;
+
+}
+
+}
+
+/*=========================================================
+UTILITY CLASSES
+=========================================================*/
+
+.hidden{
+
+display:none !important;
+
+}
+
+.success{
+
+color:#2e7d32;
+
+font-weight:bold;
+
+}
+
+.error{
+
+color:#d32f2f;
+
+font-weight:bold;
+
+}
+
+.center{
+
+text-align:center;
+
+}
+
+/*=========================================================
+END OF STYLE
+=========================================================*/
