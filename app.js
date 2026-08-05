@@ -293,42 +293,78 @@ function extractMarital(text) {
 OCCUPATION
 =========================================================*/
 
-function extractOccupation(text) {
-    let match = firstMatch(text, /i\s+am\s+a[n]?\s+([A-Za-z ]+?)(?=\.|,|$)/i);
+function extractOccupation(text){
 
-    if (!match) {
-        match = firstMatch(text, /occupation\s*[:\-]\s*([A-Za-z ]+)/i);
-    }
+let occupation="";
 
-    setValue("occupation", match);
+let m=text.match(/I am (?:a|an)\s+([^\.]+?)(?:\.|,|$)/i);
+
+if(m){
+
+occupation=m[1].trim();
+
+occupation=occupation.replace(/^an?\s+/i,"");
+
+occupation=occupation.replace(/\s+from.*$/i,"");
+
+occupation=occupation.replace(/\s+living.*$/i,"");
+
+occupation=occupation.replace(/\s+aged.*$/i,"");
+
+occupation=occupation.replace(/\s+of.*$/i,"");
+
+}
+
+setValue("occupation",occupation);
+
 }
 
 /*=========================================================
 ADDRESS
 =========================================================*/
 
-function extractAddress(text) {
-    let address = "";
+function extractAddress(text){
 
-    let r = text.match(/R\/o\s+([^\.]+?)(?=\s+I\s+live|\s+I\s+am|\.|$)/i);
-    if (r) address = r[1].trim();
+let address="";
 
-    let cityPin = text.match(/I\s+live\s+in\s+([A-Za-z ]+?)-?(\d{6})/i);
-    if (cityPin) {
-        let city = cityPin[1].trim();
-        let pin = cityPin[2].trim();
+let pincode="";
 
-        if (!address) address = city;
-        else if (!address.toLowerCase().includes(city.toLowerCase())) address += ", " + city;
+let m=text.match(/R\/o\s+(.+?)(?=I live|I am|My|\.|$)/i);
 
-        setValue("address", address);
-        return;
-    }
+if(m){
 
-    let cityOnly = text.match(/I\s+live\s+in\s+([A-Za-z ]+)/i);
-    if (cityOnly && !address) {
-        address = cityOnly[1].trim();
-    }
+address=m[1].trim();
 
-    setValue("address", address);
+}
+
+let city=text.match(/I live in\s+(.+?)(?=\.|I am|My|$)/i);
+
+if(city){
+
+if(address==="")
+
+address=city[1].trim();
+
+else
+
+address=address+", "+city[1].trim();
+
+}
+
+let pin=text.match(/\b\d{6}\b/);
+
+if(pin){
+
+pincode=pin[0];
+
+if(address.indexOf(pincode)==-1)
+
+address=address+" - "+pincode;
+
+}
+
+address=address.replace(/\s+/g," ").trim();
+
+setValue("address",address);
+
 }
