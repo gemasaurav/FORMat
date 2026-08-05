@@ -188,13 +188,32 @@ function extractAge(text) {
 DATE OF BIRTH
 =========================================================*/
 
-function extractDOB(text) {
-    let match = firstMatch(
-        text,
-        /date\s+of\s+birth\s*(?:is|:)?\s*(.+?)(?=\.\s|$)/i
-    );
+function extractDOB(text){
 
-    setValue("dob", match);
+let match = text.match(
+
+/date\s+of\s+birth\s*(?:is|:)?\s*([A-Za-z]{3,9}\.?\s+\d{1,2},?\s+\d{4})/i
+
+);
+
+if(match){
+
+setValue("dob",match[1].trim());
+
+return;
+
+}
+
+match = text.match(
+
+/\b(\d{1,2}[\/\-]\d{1,2}[\/\-]\d{2,4})\b/
+
+);
+
+if(match){
+
+setValue("dob",match[1]);
+
 }
 
 /*=========================================================
